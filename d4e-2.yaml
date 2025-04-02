@@ -1,0 +1,215 @@
+# --- START OF PART 2 OF 4 ---
+  "step_5d_propozycja_analizy":
+    scene_content:
+      - type: description
+        text: |
+          Proponujesz niezobowiązującą analizę, próbując ominąć jego sceptycyzm wobec "gwarancji".
+      - type: user_dialog
+        text: |
+          Rozumiem Pana sceptycyzm. Dlatego nie chcę nic obiecywać w ciemno. Czy pozwoliłby Pan chociaż spojrzeć na jedną z Pana faktur? Bez żadnych zobowiązań pokażę Panu, jak wygląda Pana obecna sytuacja w porównaniu do rynkowych możliwości. Nic Pan nie ryzykuje, a może się Pan czegoś ciekawego dowiedzieć.
+      - type: npc_dialog
+        text: |
+          (Chwila wahania) Fakturę? No dobrze, ale tylko spojrzeć. Mam tu gdzieś ostatnią... o, jest. Ale mówię, ja nic nie podpisuję.
+      - type: system_advice
+        text: |
+          (Zdobyłeś dostęp do faktury! To kluczowy moment. Teraz musisz szybko zidentyfikować typ umowy i potencjalne oszczędności. Transcript 2025 03 26 - jak czytać faktury, identyfikacja umowy bezterminowej/terminowej)
+      - type: description
+        text: |
+          Pan Marek podaje Ci nieco pogniecioną fakturę. Masz szansę na konkretną analizę. (Current SP: 35)
+    choices: # Order randomized, 50/50 split
+      - text: "[Analiza - Typ Umowy] Widzę, że to umowa kompleksowa... (+10)"
+        sp_change: 10
+        next_step_id: "step_6c_analiza_faktury_typ"
+      - text: "[Analiza - Cena] Spójrzmy na cenę za kWh... (+5)"
+        sp_change: 5
+        next_step_id: "step_6d_analiza_faktury_cena"
+      - text: "[Pospiech] Dobra, widzę, że można zaoszczędzić! (-10)"
+        sp_change: -10
+        next_step_id: "step_6e_pospiech_wnioski"
+      - text: "[Pytanie o Zgodę] Czy na pewno mogę analizować? (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic2"
+
+  "step_5e_powtorzenie_obietnicy":
+    scene_content:
+      - type: description
+        text: |
+          Powtarzasz obietnicę oszczędności, nie adresując sceptycyzmu klienta.
+      - type: npc_dialog
+        text: |
+          Wie pan co, szkoda mojego i pana czasu. Już mówiłem, nie jestem zainteresowany. Dziękuję i do widzenia.
+      - type: description
+        text: |
+          Klient stracił cierpliwość. Twoje naleganie przyniosło odwrotny skutek. (Current SP: 20)
+    choices: # Order randomized, 50/50 split
+      - text: "[Ostatnia Próba - Analiza] A gdybym tylko spojrzał...? (+5)"
+        sp_change: 5
+        next_step_id: "step_5d_propozycja_analizy" # Powrót do propozycji analizy
+      - text: "[Akceptacja Porażki] Rozumiem, miłego dnia. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1" # Koniec ścieżki, ale nie SP=0
+
+  "step_5f_zmiana_tematu_na_rynek":
+    scene_content:
+      - type: description
+        text: |
+          Wybrnąłeś z niewygodnego pytania o rachunki, kierując rozmowę na ogólne zasady rynku.
+      - type: user_dialog
+        text: |
+          Oczywiście, przepraszam za wścibstwo. Nie chodziło mi o konkretne kwoty. Bardziej interesuje mnie, czy zdaje Pan sobie sprawę, że od wielu lat może Pan wybrać innego sprzedawcę prądu niż Tauron, który dostarcza tylko kable? Rynek bardzo się zmienił.
+      - type: npc_dialog
+        text: |
+          Zmienić sprzedawcę? No słyszałem, ale po co? Prąd to prąd. Tauron jest od zawsze.
+      - type: system_advice
+        text: |
+          (Klient nadal nie rozumie podziału ról. To kluczowy punkt do wyjaśnienia. Użyj analogii. Transcript 2025 03 26 - TPA, rola OSD/Sprzedawcy)
+      - type: description
+        text: |
+          Wróciłeś na właściwe tory, ale stoisz przed tym samym wyzwaniem: wyjaśnieniem klientowi struktury rynku. (Current SP: 40)
+    choices: # Order randomized, 50/50 split
+      - text: "[Analogia Telefonu] To jak z operatorem sieci komórkowej... (+10)"
+        sp_change: 10
+        next_step_id: "step_5h_analogia_telefon"
+      - text: "[Techniczne TPA] Zasada TPA z 2007 roku mówi... (-10)"
+        sp_change: -10
+        next_step_id: "step_5i_techniczne_TPA"
+
+  "step_5g_naleganie_na_faktury":
+    scene_content:
+      - type: description
+        text: |
+          Nalegasz na pokazanie faktur, ignorując niechęć klienta.
+      - type: npc_dialog
+        text: |
+          Mówiłem panu, że nie pokażę! To moje prywatne sprawy. Jak pan nie rozumie, to proszę wyjść.
+      - type: description
+        text: |
+          Definitywnie przekroczyłeś granicę. Klient czuje się atakowany i kończy rozmowę. (Current SP: 25)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjście] Dobrze, przepraszam i wychodzę. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1" # Koniec ścieżki
+      - text: "[Jeszcze Jedno Pytanie] Ale chociaż powiedzmy o rynku... (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic3"
+
+  "step_5h_analogia_telefon":
+    scene_content:
+      - type: description
+        text: |
+          Używasz analogii do rynku telekomunikacyjnego, aby wyjaśnić podział ról.
+      - type: user_dialog
+        text: |
+          Wie Pan, to trochę jak z telefonem komórkowym. Infrastruktura, czyli maszty, należy do jednego operatora (jak Tauron do kabli), ale Pan może wybrać ofertę od różnych firm, które z tych masztów korzystają – Orange, Play, T-Mobile... Podobnie jest z prądem. Tauron dba o "kable", ale samą energię może Pan kupować od wielu innych firm, często na lepszych warunkach.
+      - type: npc_dialog
+        text: |
+          (Marszczy czoło, zastanawia się) Aha... czyli Tauron to tylko te słupy i kable, a prąd mogę kupić od kogoś innego? To czemu nikt mi o tym nie powiedział?
+      - type: system_advice
+        text: |
+          (Doskonały moment! Klient zrozumiał analogię. Teraz potwierdź i przejdź do korzyści płynących z wyboru sprzedawcy, np. stabilnej ceny. Transcript 2025 03 26 - korzyści z TPA, Transcript 2025 03 27 - umowy terminowe)
+      - type: description
+        text: |
+          Analogia zadziałała. Klient jest zaskoczony, ale otwarty na dalsze wyjaśnienia. Masz dobrą pozycję wyjściową. (Current SP: 50 / 40 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Potwierdzenie i Korzyść Ceny] Dokładnie! A dzięki temu... (+10)"
+        sp_change: 10
+        next_step_id: "step_6f_potwierdzenie_i_korzysc_ceny"
+      - text: "[Dalsza Edukacja] Tak działa zasada TPA... (+5)"
+        sp_change: 5
+        next_step_id: "step_6g_dalsza_edukacja_TPA"
+
+  "step_5i_techniczne_TPA":
+    scene_content:
+      - type: description
+        text: |
+          Używasz technicznego żargonu (TPA, OSD), próbując wyjaśnić sytuację.
+      - type: npc_dialog
+        text: |
+          TPA? OSD? Pan mówi do mnie po chińsku. Ja jestem prosty człowiek, prowadzę restaurację. Dziękuję, nic z tego nie rozumiem.
+      - type: system_advice
+        text: |
+          (Techniczny język bez wcześniejszego zbudowania kontekstu jest niezrozumiały dla klienta. Zawsze używaj prostych słów i analogii. Transcript 2025 03 25 - komunikacja z klientem)
+      - type: description
+        text: |
+          Twój techniczny język zniechęcił klienta. Straciłeś jego uwagę. (Current SP: 40 / 30 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Uproszczenie - Analogia] Przepraszam, ujmę to inaczej... (+5)"
+        sp_change: 5
+        next_step_id: "step_5h_analogia_telefon" # Powrót do analogii
+      - text: "[Koniec] Skoro Pan nie rozumie, to trudno. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1" # Koniec ścieżki
+
+  "step_6a_wyjasnienie_OSD_Sprzedawca":
+    scene_content:
+      - type: description
+        text: |
+          Kontynuujesz wyjaśnianie podziału ról na rynku energii, budując na wcześniejszym zrozumieniu klienta.
+      - type: user_dialog
+        text: |
+          Dokładnie tak, Panie Marku. Tauron, jako Operator Systemu Dystrybucyjnego (OSD), jest właścicielem sieci - tych kabli i liczników. Oni odpowiadają za to, żeby prąd fizycznie dopłynął i usuwają awarie. Ale samą energię, ten "towar", może Pan kupić od innej firmy, czyli sprzedawcy. To daje Panu możliwość wyboru lepszej ceny lub warunków, na przykład stałej ceny na kilka lat, żeby uniknąć niespodzianek.
+      - type: npc_dialog
+        text: |
+          Czyli jak zmienię tego sprzedawcę, to Tauron dalej będzie mi dostarczał prąd i naprawiał, jak coś się zepsuje? A rachunek będę dostawał od kogo innego?
+      - type: system_advice
+        text: |
+          (Klient precyzyjnie podsumował kluczowe aspekty. Potwierdź jego zrozumienie i przejdź do benefitów umowy terminowej ze stałą ceną, adresując jego wcześniejszą potrzebę 'świętego spokoju'. Transcript 2025 03 27 - umowa terminowa jako odpowiedź na potrzebę stabilności)
+      - type: description
+        text: |
+          Pan Marek wydaje się rozumieć mechanizm. To idealny moment, by pokazać, jak zmiana sprzedawcy może zapewnić mu upragniony "święty spokój" w kwestii kosztów. (Current SP: 70 / 55 / 65 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Potwierdzenie i Benefit Spokoju] Tak! I właśnie dzięki temu... (+10)"
+        sp_change: 10
+        next_step_id: "step_7a_potwierdzenie_i_benefit_spokoju"
+      - text: "[Potwierdzenie i Pytanie o Fakturę] Zgadza się. Mogę zerknąć...? (+5)"
+        sp_change: 5
+        next_step_id: "step_7b_potwierdzenie_i_pytanie_faktura"
+
+  "step_6b_minimalizowanie_rol":
+    scene_content:
+      - type: description
+        text: |
+          Zminimalizowałeś znaczenie podziału ról, skupiając się od razu na cenach.
+      - type: npc_dialog
+        text: |
+          No dobrze, ale jak to w końcu jest? Kto za co odpowiada? Jak pan mi tego nie wytłumaczy, to skąd mam wiedzieć, czy nie wpadnę w jakieś kłopoty?
+      - type: system_advice
+        text: |
+          (Pominięcie kluczowego wyjaśnienia budzi nieufność klienta. Musisz wrócić do tłumaczenia podziału ról OSD/Sprzedawca. Transcript 2025 03 26)
+      - type: description
+        text: |
+          Twoje pójście na skróty wzbudziło podejrzenia. Klient potrzebuje jasnego wyjaśnienia struktury rynku, zanim przejdziecie dalej. (Current SP: 50 / 35 / 45 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Powrót do Wyjaśnień] Ma Pan rację, wyjaśnijmy... (+5)"
+        sp_change: 5
+        next_step_id: "step_6a_wyjasnienie_OSD_Sprzedawca" # Powrót do wyjaśnień
+      - text: "[Naleganie na Ceny] Ale to nieistotne! Liczy się cena! (-10)"
+        sp_change: -10
+        next_step_id: "step_7c_naleganie_na_ceny"
+
+  "step_6c_analiza_faktury_typ":
+    scene_content:
+      - type: description
+        text: |
+          Analizujesz nagłówek i podstawowe informacje na fakturze, identyfikując typ umowy.
+      - type: user_dialog
+        text: |
+          Dobrze, spójrzmy... Widzę, że ma Pan umowę kompleksową z Tauronem. To typowe dla klientów, którzy nigdy nie zmieniali sprzedawcy. Pytanie teraz, czy ta umowa jest terminowa, czy bezterminowa? Zazwyczaj takie stare umowy przechodzą na czas nieokreślony, co oznacza, że cena może się zmieniać. Czy widzi Pan gdzieś datę obowiązywania umowy?
+      - type: npc_dialog
+        text: |
+          (Przegląda fakturę razem z Tobą) Datę? Nie wiem... Tu są jakieś numery, tu odczyty... A, tu coś jest napisane "Cennik standardowy". Co to znaczy?
+      - type: system_advice
+        text: |
+          ("Cennik standardowy" to niemal pewny sygnał umowy bezterminowej - najdroższej opcji. Wyjaśnij to klientowi i ryzyko z tym związane. Transcript 2025 03 27 - ryzyko umowy bezterminowej)
+      - type: description
+        text: |
+          Zidentyfikowałeś kluczową informację. "Cennik standardowy" prawie na pewno oznacza umowę bezterminową. (Current SP: 45)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjaśnienie Ryzyka Bezterminowej] Cennik standardowy to... (+10)"
+        sp_change: 10
+        next_step_id: "step_7d_wyjasnienie_ryzyka_bezterminowej"
+      - text: "[Pytanie o Zrozumienie] A jak Pan rozumie 'cennik standardowy'? (-10)"
+        sp_change: -10
+        next_step_id: "step_7e_pytanie_o_zrozumienie_cennika"
+
+# --- END OF PART 2 OF 4 ---

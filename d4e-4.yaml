@@ -1,0 +1,216 @@
+# --- START OF PART 4 OF 4 ---
+  "step_7f_porownanie_w_ciemno":
+    scene_content:
+      - type: description
+        text: |
+          Porównujesz cenę klienta do rynku, nie znając typu jego umowy.
+      - type: npc_dialog
+        text: |
+          Skąd pan wie, że drogo? Może mam super warunki? Nie zna pan mojej umowy. Nie będę z panem rozmawiał.
+      - type: description
+        text: |
+          Twoje porównanie "w ciemno" zostało odebrane jako manipulacja. Straciłeś wiarygodność. (Current SP: 30)
+    choices: # Order randomized, 50/50 split
+      - text: "[Powrót do Typu Umowy] Ma Pan rację, sprawdźmy najpierw typ... (+5)"
+        sp_change: 5
+        next_step_id: "step_6c_analiza_faktury_typ" # Powrót do analizy typu
+      - text: "[Koniec] Jak Pan uważa. Do widzenia. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1"
+
+  "step_7g_podtrzymanie_pospiechu":
+    scene_content:
+      - type: description
+        text: |
+          Bronisz swojego pośpiechu, powołując się na doświadczenie.
+      - type: npc_dialog
+        text: |
+          Doświadczenie? Może i pan ma, ale ja panu nie ufam. Dziękuję za wizytę.
+      - type: description
+        text: |
+          Klient nie jest przekonany Twoim doświadczeniem, a brakiem transparentności. Rozmowa zakończona. (Current SP: 15)
+    choices: # Order randomized, 50/50 split
+      - text: "[Ostatnia Szansa - Analiza] Pozwoli Pan chociaż spokojnie...? (+5)"
+        sp_change: 5
+        next_step_id: "step_6c_analiza_faktury_typ" # Powrót do analizy
+      - text: "[Wyjście] Skoro Pan nie ufa... Do widzenia. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1"
+
+  "step_7h_wyjasnienie_ubezpieczenie":
+    scene_content:
+      - type: description
+        text: |
+          Tłumaczysz stałą cenę jako formę ubezpieczenia przed ryzykiem rynkowym.
+      - type: user_dialog
+        text: |
+          To trochę jak z ubezpieczeniem domu. Płaci Pan stałą składkę i ma Pan spokój, że w razie pożaru czy powodzi nie zostanie Pan z niczym. Ze stałą ceną prądu jest podobnie - płaci Pan ustaloną stawkę i jest Pan zabezpieczony przed gwałtownymi wzrostami cen na rynku, które w ostatnich latach zdarzały się bardzo często. Owszem, jeśli ceny na giełdzie mocno spadną, Pan na tym nie skorzysta, ale też uniknie Pan ryzyka nagłego, dużego wzrostu kosztów, który mógłby zachwiać budżetem restauracji. To cena za spokój i stabilność.
+      - type: npc_dialog
+        text: |
+          (Kiwa głową ze zrozumieniem) Hm, no to ma sens. Stabilność jest ważna w tym biznesie. Czyli miałbym pewność, ile płacę przez te 5 lat?
+      - type: system_advice
+        text: |
+          (Klient zrozumiał i docenił argument stabilności. Potwierdź gwarancję i zaproponuj przygotowanie konkretnej kalkulacji na podstawie jego faktury. Transcript 2025 03 27)
+      - type: description
+        text: |
+          Przekonałeś klienta do idei stałej ceny jako formy zabezpieczenia. Jest gotów na kolejny krok. (Current SP: 70 / 60 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Potwierdzenie Gwarancji i Kalkulacja] Tak jest! Policzmy to... (+10)"
+        sp_change: 10
+        next_step_id: "step_8a_propozycja_kalkulacji_fix" # Łączy się ze ścieżką kalkulacji
+      - text: "[Pytanie o Akceptację Ryzyka] Czyli akceptuje Pan...? (+5)"
+        sp_change: 5
+        next_step_id: "step_8h_pytanie_o_akceptacje"
+
+  "step_7i_wyjasnienie_ryzyko_rynkowe":
+    scene_content:
+      - type: description
+        text: |
+          Skupiasz się na ryzyku wzrostów cen przy braku stałej umowy.
+      - type: npc_dialog
+        text: |
+          No tak, wzrosty są ryzykowne... Ale co jak ceny spadną? Nie chcę przepłacać.
+      - type: system_advice
+        text: |
+          (Klient nadal koncentruje się na potencjalnej stracie przy spadkach. Wzmocnij argument 'ubezpieczenia' i stabilności. Transcript 2025 03 27)
+      - type: description
+        text: |
+          Nie rozwiałeś do końca obaw klienta o przepłacanie przy spadkach. (Current SP: 65 / 55 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Powrót do 'Ubezpieczenia'] Ale stała cena to gwarancja... (+5)"
+        sp_change: 5
+        next_step_id: "step_7h_wyjasnienie_ubezpieczenie" # Powrót do lepszego wyjaśnienia
+      - text: "[Akceptacja Wątpliwości] No tak, jest takie ryzyko... (-10)"
+        sp_change: -10
+        next_step_id: "step_8i_akceptacja_watpliwosci"
+
+  "step_7j_obietnica_najlepszej_ceny_fix":
+    scene_content:
+      - type: description
+        text: |
+          Obiecujesz, że ze stałą ceną od D4E klient nie przepłaci.
+      - type: npc_dialog
+        text: |
+          Skąd ta pewność? Rynek jest nieprzewidywalny. Nie wierzę w takie gwarancje.
+      - type: description
+        text: |
+          Twoja zbyt daleko idąca obietnica podważyła Twoją wiarygodność. Klient słusznie zauważa nieprzewidywalność rynku. (Current SP: 50 / 40 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Korekta - Ubezpieczenie] Ma Pan rację, chodzi bardziej o... (+5)"
+        sp_change: 5
+        next_step_id: "step_7h_wyjasnienie_ubezpieczenie" # Powrót do wyjaśnienia 'ubezpieczenia'
+      - text: "[Utrzymanie Obietnicy] Ale nasi analitycy... (-10)"
+        sp_change: -10
+        next_step_id: "step_8j_utrzymanie_obietnicy_fix"
+
+  "step_7k_wiecej_teorii":
+    scene_content:
+      - type: description
+        text: |
+          Zamiast korzyści, kontynuujesz teoretyczne wyjaśnienia o rynku energii.
+      - type: npc_dialog
+        text: |
+          Dobrze, dobrze, rozumiem. Ale co ja konkretnie mogę na tym zyskać? Bo na razie to tylko teoria.
+      - type: description
+        text: |
+          Klient traci cierpliwość. Potrzebuje konkretnych korzyści, a nie dalszych wykładów. (Current SP: 45 / 35 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Przejście do Korzyści] Już mówię! Zyskuje Pan wybór i... (+5)"
+        sp_change: 5
+        next_step_id: "step_6f_potwierdzenie_i_korzysc_ceny" # Powrót do korzyści
+      - text: "[Koniec Teorii] To już wszystko, co chciałem wyjaśnić. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1"
+
+  # Przykładowe kroki z dalszej części symulacji (wiele kroków pominięto dla zwięzłości)
+
+  "step_8a_propozycja_kalkulacji_fix": # Przykładowy krok
+    scene_content:
+      - type: description
+        text: |
+          Proponujesz konkretną kalkulację na podstawie faktury, podkreślając brak zobowiązań.
+      - type: user_dialog
+        text: |
+          Świetnie, że widzi Pan wartość w stabilności. Żebyśmy mogli porozmawiać o konkretnych liczbach, potrzebowałbym na chwilę Pana ostatnią fakturę. Sprawdzę Pana zużycie i przygotuję niezobowiązującą kalkulację ze stałą ceną na te 5 lat. Wtedy zobaczy Pan czarno na białym, jak to wygląda.
+      - type: npc_dialog
+        text: |
+          (Podaje fakturę) Dobrze, niech pan liczy. Ale mówię, ja się muszę zastanowić.
+      - type: system_advice
+        text: |
+          (Masz fakturę i zgodę na kalkulację. Przeanalizuj zużycie, dobierz odpowiedni narzut i przedstaw ofertę, podkreślając roczne oszczędności/stabilność w porównaniu do cennika standardowego. Transcript 2025 03 27 - liczenie oferty)
+      - type: description
+        text: |
+          Klient jest gotów zobaczyć ofertę. Czas na szybką kalkulację i prezentację. (Current SP: 90 / 75 / 85 / 80 / 70 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      # ... Dalsze kroki prowadzące do finalizacji lub kolejnych obiekcji ...
+      - text: "[Prezentacja Oferty] Przy Pana zużyciu, stała cena to... (+10)"
+        sp_change: 10
+        next_step_id: "step_9_prezentacja_oferty" # Krok prowadzący dalej
+      - text: "[Zbyt Długa Analiza] Muszę to dokładnie przeliczyć w biurze. (-10)"
+        sp_change: -10
+        next_step_id: "step_9_odroczenie_kalkulacji" # Krok prowadzący dalej
+
+  # ... Wiele innych kroków symulacji ...
+
+  "step_29_finalna_propozycja": # Przykładowy krok blisko końca
+    scene_content:
+      # ... opis sytuacji po przejściu obiekcji ...
+      - type: description
+        text: |
+          Wyjaśniłeś wszystkie wątpliwości Pana Marka. Wydaje się przekonany do oferty ze stałą ceną. (Current SP: 65) # SP musi być >= 50 aby wygrać
+    choices: # Order randomized, 50/50 split
+      - text: "[Prośba o Decyzję] Czy możemy w takim razie sfinalizować? (+10)"
+        sp_change: 10
+        next_step_id: "ending_good_deal" # Prowadzi do dobrego zakończenia
+      - text: "[Wahanie] Może chciałby Pan jeszcze czas do namysłu? (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_hesitation" # Prowadzi do złego zakończenia (brak domknięcia)
+
+  # ... Inne ścieżki i kroki ...
+
+  # --- DEFINICJE ZAKOŃCZEŃ ---
+
+  "ending_good_deal":
+    narrative: |
+      Gratulacje! Pan Marek, przekonany Twoją argumentacją i profesjonalnym podejściem, zdecydował się podpisać umowę na stałą cenę z Direct4Energy. Docenił Twoje wyjaśnienia, cierpliwość i skupienie na jego potrzebie stabilności. Zabezpieczył swoje koszty energii na najbliższe lata, a Ty zdobyłeś nowego, zadowolonego klienta. Dobra robota!
+    is_ending: true
+    ending_type: "good"
+
+  "ending_bad_hesitation":
+    narrative: |
+      Byłeś blisko, ale Twoje wahanie w kluczowym momencie sprawiło, że Pan Marek również zaczął mieć wątpliwości. Poprosił o czas do namysłu, a Ty nie domknąłeś sprzedaży, gdy była na to szansa. Niestety, "czas do namysłu" często oznacza utratę klienta. Zabrakło pewności siebie w finale.
+    is_ending: true
+    ending_type: "bad_insufficient_sp" # Zakończenie dla tej ścieżki przy SP<50 (lub specyficzne złe)
+
+  "ending_bad_insufficient_sp_path1":
+    narrative: |
+      Niestety, Twoje podejście nie przekonało Pana Marka. Nie udało Ci się zbudować wystarczającego zaufania lub skutecznie odpowiedzieć na jego obawy. Klient pozostał przy swojej starej umowie, a Ty straciłeś potencjalną sprzedaż. Analiza rozmowy może pomóc w przyszłości.
+    is_ending: true
+    ending_type: "bad_insufficient_sp" # Zakończenie dla tej ścieżki przy SP<50
+
+  # Uniwersalne Zakończenia dla SP=0
+  "ending_bad_sp_zero_generic1":
+    narrative: |
+      Krytyczny błąd w rozmowie spowodował, że Twoja Szansa Powodzenia spadła do zera. Straciłeś zaufanie klienta i możliwość kontynuowania. Symulacja zakończona niepowodzeniem.
+    is_ending: true
+    ending_type: "bad_sp_zero"
+
+  "ending_bad_sp_zero_generic2":
+    narrative: |
+      Twoja strategia okazała się całkowicie nieskuteczna. Seria złych decyzji doprowadziła Szansę Powodzenia do zera. Klient zakończył rozmowę. Symulacja zakończona.
+    is_ending: true
+    ending_type: "bad_sp_zero"
+
+  "ending_bad_sp_zero_generic3":
+    narrative: |
+      Niestety, popełniłeś fundamentalny błąd, który zniweczył Twoje szanse. Szansa Powodzenia wynosi zero. Klient nie jest zainteresowany dalszą rozmową. Koniec symulacji.
+    is_ending: true
+    ending_type: "bad_sp_zero"
+
+  "ending_bad_sp_zero_generic4":
+    narrative: |
+      Brak zrozumienia potrzeb klienta i nieodpowiednie reakcje wyzerowały Twoją Szansę Powodzenia. Symulacja kończy się niepowodzeniem na tym etapie.
+    is_ending: true
+    ending_type: "bad_sp_zero"
+
+# --- END OF PART 4 OF 4 ---
