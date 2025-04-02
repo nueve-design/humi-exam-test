@@ -1,0 +1,218 @@
+# --- START OF PART 3 OF 4 ---
+  "step_6d_analiza_faktury_cena":
+    scene_content:
+      - type: description
+        text: |
+          Skupiasz się na cenie jednostkowej za energię czynną na fakturze.
+      - type: user_dialog
+        text: |
+          Spójrzmy na samą cenę energii... Tutaj ma Pan stawkę X złotych za kilowatogodzinę. Wie Pan, jak to się ma do obecnych cen rynkowych lub ofert ze stałą ceną?
+      - type: npc_dialog
+        text: |
+          Nie mam pojęcia. Skąd mam wiedzieć? Płacę tyle, ile napisali.
+      - type: system_advice
+        text: |
+          (Sama cena bez kontekstu typu umowy (terminowa/bezterminowa) niewiele mówi. Najpierw ustal typ umowy, potem porównuj ceny. Transcript 2025 03 27 - najpierw diagnoza, potem leczenie)
+      - type: description
+        text: |
+          Skupiłeś się na cenie, pomijając kluczową kwestię typu umowy. Klient nie widzi kontekstu. (Current SP: 40)
+    choices: # Order randomized, 50/50 split
+      - text: "[Powrót do Typu Umowy] Racja, najpierw sprawdźmy typ umowy... (+5)"
+        sp_change: 5
+        next_step_id: "step_6c_analiza_faktury_typ" # Powrót do analizy typu
+      - text: "[Porównanie w Ciemno] Ale ja Panu powiem, że to drogo! (-10)"
+        sp_change: -10
+        next_step_id: "step_7f_porownanie_w_ciemno"
+
+  "step_6e_pospiech_wnioski":
+    scene_content:
+      - type: description
+        text: |
+          Rzucasz okiem na fakturę i od razu wyciągasz wniosek o możliwości oszczędności.
+      - type: npc_dialog
+        text: |
+          Już pan wie? Tak od razu? Nie za szybko? Nie wyglądam na naiwniaka.
+      - type: system_advice
+        text: |
+          (Zbyt szybkie wnioski bez pokazania klientowi, skąd się biorą, budzą podejrzenia. Spokojnie przeanalizuj fakturę razem z nim. Transcript 2025 03 25 - budowanie zaufania przez transparentność)
+      - type: description
+        text: |
+          Twój pośpiech wzbudził nieufność. Klient podejrzewa, że chcesz go naciągnąć. (Current SP: 25)
+    choices: # Order randomized, 50/50 split
+      - text: "[Spowolnienie i Analiza] Ma Pan rację, przepraszam... (+5)"
+        sp_change: 5
+        next_step_id: "step_6c_analiza_faktury_typ" # Powrót do spokojnej analizy
+      - text: "[Podtrzymanie Pośpiechu] Ale ja mam doświadczenie! Wiem co widzę! (-10)"
+        sp_change: -10
+        next_step_id: "step_7g_podtrzymanie_pospiechu"
+
+  "step_6f_potwierdzenie_i_korzysc_ceny":
+    scene_content:
+      - type: description
+        text: |
+          Potwierdzasz zrozumienie klienta i płynnie przechodzisz do korzyści związanych z wyborem sprzedawcy.
+      - type: user_dialog
+        text: |
+          Dokładnie tak! Tauron dalej dba o infrastrukturę, a Pan zyskuje możliwość wyboru sprzedawcy energii. A dzięki temu może Pan na przykład zagwarantować sobie stałą cenę prądu na kilka lat do przodu. Koniec z martwieniem się, czy rachunki nagle podskoczą, bo coś się dzieje na świecie albo w polityce. Ma Pan pewność kosztów.
+      - type: npc_dialog
+        text: |
+          Stała cena? Na kilka lat? A to nie jest tak, że potem się przepłaca, jak ceny spadną?
+      - type: system_advice
+        text: |
+          (Klient podniósł ważną obiekcję dotyczącą stałej ceny. Wyjaśnij, że to forma 'ubezpieczenia' od ryzyka wzrostów, odwołaj się do historycznych wahań i potrzeby stabilności w biznesie. Transcript 2025 03 27 - porównanie FIX vs SPOT, Transcript 2025 03 26 - historia cen)
+      - type: description
+        text: |
+          Pan Marek jest zainteresowany stałą ceną, ale ma obawy o przepłacanie. Jak wyjaśnisz mu wartość stabilności? (Current SP: 60 / 50 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjaśnienie - Ubezpieczenie] To jak ubezpieczenie... (+10)"
+        sp_change: 10
+        next_step_id: "step_7h_wyjasnienie_ubezpieczenie"
+      - text: "[Wyjaśnienie - Ryzyko Rynkowe] Ale ryzykuje Pan wzrosty... (+5)"
+        sp_change: 5
+        next_step_id: "step_7i_wyjasnienie_ryzyko_rynkowe"
+      - text: "[Obietnica Najlepszej Ceny] U nas Pan nie przepłaci! (-10)"
+        sp_change: -10
+        next_step_id: "step_7j_obietnica_najlepszej_ceny_fix"
+      - text: "[Propozycja SPOT] To może cena rynkowa? (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic4" # Zła propozycja dla klienta ceniącego spokój
+
+  "step_6g_dalsza_edukacja_TPA":
+    scene_content:
+      - type: description
+        text: |
+          Kontynuujesz edukację na temat zasady TPA.
+      - type: user_dialog
+        text: |
+          Tak, to wszystko dzięki zasadzie TPA, czyli dostępu stron trzecich, wprowadzonej w 2007 roku. Zmusiła ona firmy takie jak Tauron do rozdzielenia działalności i udostępnienia sieci innym sprzedawcom.
+      - type: npc_dialog
+        text: |
+          Aha... No dobrze, ale co ja z tego mam?
+      - type: system_advice
+        text: |
+          (Klient potrzebuje konkretnej korzyści, a nie teorii. Przejdź do benefitów: wybór, lepsze ceny, stabilność. Transcript 2025 03 26 - korzyści z TPA)
+      - type: description
+        text: |
+          Wyjaśnienia techniczne nie trafiają do klienta. Musisz pokazać mu realne korzyści. (Current SP: 55 / 45 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Przejście do Korzyści] Dzięki temu ma Pan wybór i... (+5)"
+        sp_change: 5
+        next_step_id: "step_6f_potwierdzenie_i_korzysc_ceny" # Powrót do korzyści
+      - text: "[Więcej Teorii] Jest jeszcze kwestia obliga giełdowego... (-10)"
+        sp_change: -10
+        next_step_id: "step_7k_wiecej_teorii"
+
+  "step_7a_potwierdzenie_i_benefit_spokoju":
+    scene_content:
+      - type: description
+        text: |
+          Potwierdzasz zrozumienie klienta i odnosisz się bezpośrednio do jego potrzeby "świętego spokoju".
+      - type: user_dialog
+        text: |
+          Dokładnie tak! Tauron dalej dba o kable i awarie, a Pan może wybrać sprzedawcę, który da Panu najlepsze warunki. I tu właśnie pojawia się ten "święty spokój". Wyobraża Pan sobie, że przez najbliższe 5 lat ma Pan gwarantowaną, stałą cenę za prąd? Niezależnie od tego, co się dzieje na rynku, Pan płaci tyle samo. Zero niespodzianek, pełna przewidywalność kosztów. To chyba brzmi jak spokój, prawda?
+      - type: npc_dialog
+        text: |
+          (Zaintrygowany) 5 lat stała cena? Hm... A ile by to kosztowało? I czy na pewno nic się nie zmieni?
+      - type: system_advice
+        text: |
+          (Klient jest wyraźnie zainteresowany! To moment na przedstawienie konkretnej oferty (FIX), podkreślenie gwarancji i poproszenie o fakturę do dokładnej kalkulacji. Transcript 2025 03 27 - prezentacja oferty FIX)
+      - type: description
+        text: |
+          Zainteresowałeś klienta stabilnością i przewidywalnością. Czas na konkrety. (Current SP: 80 / 65 / 75 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Propozycja Kalkulacji] Mogę Panu policzyć, potrzebuję fakturę... (+10)"
+        sp_change: 10
+        next_step_id: "step_8a_propozycja_kalkulacji_fix"
+      - text: "[Podanie Ceny 'z Głowy'] Mniej więcej byłoby to X zł... (-10)"
+        sp_change: -10
+        next_step_id: "step_8b_cena_z_glowy"
+
+  "step_7b_potwierdzenie_i_pytanie_faktura":
+    scene_content:
+      - type: description
+        text: |
+          Potwierdziłeś zrozumienie klienta, ale od razu prosisz o fakturę.
+      - type: npc_dialog
+        text: |
+          Zgadza się. Ale po co panu znowu faktura? Mówił pan, że Tauron tylko dostarcza.
+      - type: system_advice
+        text: |
+          (Musisz uzasadnić potrzebę faktury - np. do oszacowania zużycia i obliczenia oszczędności w stosunku do obecnej, prawdopodobnie bezterminowej, umowy. Transcript 2025 03 26 - analiza faktury)
+      - type: description
+        text: |
+          Klient nie rozumie, dlaczego potrzebujesz faktury, skoro rozmawialiście o podziale ról. (Current SP: 75 / 60 / 70 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjaśnienie Celu Faktury] Faktura pomoże mi policzyć... (+5)"
+        sp_change: 5
+        next_step_id: "step_8c_wyjasnienie_celu_faktury"
+      - text: "[Nacisk] Po prostu potrzebuję fakturę, żeby dać ofertę. (-10)"
+        sp_change: -10
+        next_step_id: "step_8d_nacisk_bez_wyjasnienia"
+
+  "step_7c_naleganie_na_ceny":
+    scene_content:
+      - type: description
+        text: |
+          Nalegasz, że podział ról jest nieistotny i liczy się tylko cena.
+      - type: npc_dialog
+        text: |
+          Jak to nieistotne? Dla mnie jest istotne, kto za co odpowiada! Jak pan mi podstaw nie wytłumaczy, to jak mam panu zaufać w kwestii pieniędzy? Dziękuję, nie skorzystam.
+      - type: description
+        text: |
+          Brak transparentności i lekceważenie pytań klienta zniszczyły zaufanie. Rozmowa zakończona. (Current SP: 40 / 25 / 35 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Próba Ratunku] Przepraszam, wróćmy do wyjaśnień... (+5)"
+        sp_change: 5
+        next_step_id: "step_6a_wyjasnienie_OSD_Sprzedawca" # Powrót do wyjaśnień
+      - text: "[Koniec] Jak Pan woli. Do widzenia. (-10)"
+        sp_change: -10
+        next_step_id: "ending_bad_insufficient_sp_path1" # Koniec ścieżki
+
+  "step_7d_wyjasnienie_ryzyka_bezterminowej":
+    scene_content:
+      - type: description
+        text: |
+          Wyjaśniasz klientowi, co oznacza "Cennik standardowy" i jakie ryzyko niesie umowa bezterminowa.
+      - type: user_dialog
+        text: |
+          "Cennik standardowy" to zazwyczaj oznacza, że ma Pan umowę na czas nieokreślony, czyli bezterminową. To niestety najdroższa opcja na rynku. Oznacza to, że sprzedawca, w tym przypadku Tauron Sprzedaż, może w każdej chwili podnieść Panu cenę prądu, informując Pana tylko listownie. Nie ma Pan żadnej gwarancji, ile zapłaci za miesiąc czy dwa. W ostatnich latach takie ceny potrafiły wzrosnąć bardzo gwałtownie.
+      - type: npc_dialog
+        text: |
+          (Zaniepokojony) Jak to? Mogą mi podnieść cenę, kiedy chcą? Byłem pewien, że mam jakąś stałą umowę... To dlatego rachunki tak skaczą?
+      - type: system_advice
+        text: |
+          (Klient jest zszokowany i zaczyna rozumieć swoją sytuację. Potwierdź jego przypuszczenia i przedstaw umowę terminową ze stałą ceną jako rozwiązanie problemu niestabilności. Transcript 2025 03 27 - umowa terminowa vs bezterminowa)
+      - type: description
+        text: |
+          Uświadomiłeś klientowi realne ryzyko jego obecnej umowy. Jest gotów szukać rozwiązania. (Current SP: 55)
+    choices: # Order randomized, 50/50 split
+      - text: "[Propozycja Rozwiązania - FIX] Dlatego proponujemy... (+10)"
+        sp_change: 10
+        next_step_id: "step_8e_propozycja_rozwiazania_fix"
+      - text: "[Dalsza Analiza Faktury] Sprawdźmy jeszcze zużycie... (+5)"
+        sp_change: 5
+        next_step_id: "step_8f_dalsza_analiza_faktury"
+
+  "step_7e_pytanie_o_zrozumienie_cennika":
+    scene_content:
+      - type: description
+        text: |
+          Pytasz klienta o jego interpretację "cennika standardowego", zamiast od razu wyjaśnić.
+      - type: npc_dialog
+        text: |
+          No... standardowy, czyli taki normalny, jak dla wszystkich. Chyba. Nie wiem.
+      - type: system_advice
+        text: |
+          (Klient nie wie, co to oznacza. Twoje pytanie było niepotrzebne i nie posunęło rozmowy do przodu. Od razu wyjaśnij ryzyko. Transcript 2025 03 27)
+      - type: description
+        text: |
+          Straciłeś inicjatywę, zadając pytanie, na które klient nie zna odpowiedzi. (Current SP: 35)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjaśnienie Ryzyka] Cennik standardowy oznacza niestety... (+5)"
+        sp_change: 5
+        next_step_id: "step_7d_wyjasnienie_ryzyka_bezterminowej" # Przejście do wyjaśnienia
+      - text: "[Zostawienie Tematu] Dobrze, nieważne. Spójrzmy na co innego. (-10)"
+        sp_change: -10
+        next_step_id: "step_8g_zostawienie_tematu_cennika"
+
+# --- END OF PART 3 OF 4 ---

@@ -1,0 +1,313 @@
+title: "Direct4Energy: Przełamanie Oporu - Symulacja Sprzedażowa"
+start_step_id: "step_1_wejscie"
+initial_sp: 30
+system_advice_status: ON
+steps:
+  "step_1_wejscie":
+    scene_content:
+      - type: description
+        text: |
+          Wchodzisz do przytulnej, choć nieco staroświeckiej restauracji. Za barem krząta się pracownik. Cel: porozmawiać z właścicielem o ofercie Direct4Energy.
+      - type: user_dialog
+        text: |
+          Dzień dobry, chciałbym porozmawiać z właścicielem. Jest może dostępny?
+      - type: npc_dialog
+        text: |
+          (Pracownik spogląda nieufnie) A w jakiej sprawie? Szef jest zajęty w kuchni.
+      - type: system_advice
+        text: |
+          (Pierwsze wrażenie jest kluczowe. Jak przedstawisz cel wizyty, by od razu nie zostać odesłanym?)
+      - type: description
+        text: |
+          Pracownik wydaje się chronić dostęp do szefa. Twoja odpowiedź zadecyduje, czy rozmowa w ogóle się rozpocznie. (Current SP: 30)
+    choices: # Order randomized, 50/50 split
+      - text: "[Biznesowo] Chodzi o optymalizację kosztów energii. (+5)"
+        sp_change: 5
+        next_step_id: "step_2a_cel_biznesowy"
+      - text: "[Tajemniczo] Mam ważną sprawę do szefa. (-10)"
+        sp_change: -10
+        next_step_id: "step_2b_cel_tajemniczy"
+
+  "step_2a_cel_biznesowy":
+    scene_content:
+      - type: description
+        text: |
+          Pracownik przez chwilę się waha, ale wzmianka o kosztach wydaje się trafiona. Kiwa głową.
+      - type: npc_dialog
+        text: |
+          Koszty... no dobrze, zapytam szefa. Proszę chwilę poczekać.
+      - type: description
+        text: |
+          Po kilku minutach z zaplecza wychodzi starszy mężczyzna, wycierając ręce w fartuch. Wygląda na zmęczonego, ale zaciekawionego. To Pan Marek, właściciel. (Current SP: 35)
+    choices: # Order randomized, 50/50 split
+      - text: "[Przedstawienie] Dzień dobry, jestem z D4E... (-10)"
+        sp_change: -10
+        next_step_id: "step_3a_standardowe_przedstawienie"
+      - text: "[Pozytywne Otwarcie] Dziękuję za chwilę... (+5)"
+        sp_change: 5
+        next_step_id: "step_3b_pozytywne_otwarcie"
+
+  "step_2b_cel_tajemniczy":
+    scene_content:
+      - type: description
+        text: |
+          Pracownik marszczy brwi, Twoja odpowiedź wzbudziła jego podejrzenia.
+      - type: npc_dialog
+        text: |
+          Ważna sprawa? Jak pan się nie przedstawi i nie powie konkretnie, o co chodzi, to szef na pewno nie wyjdzie. Pewnie kolejna oferta...
+      - type: system_advice
+        text: |
+          (Unikanie konkretów często prowadzi do oporu. Lepiej od razu budować zaufanie, nawet z pracownikiem - patrz Transcript 2025 03 25)
+      - type: description
+        text: |
+          Zostałeś przyparty do muru. Pracownik nie zamierza Cię dopuścić do właściciela bez konkretów. (Current SP: 20)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjaśnienie] Reprezentuję Direct4Energy... (+10)"
+        sp_change: 10
+        next_step_id: "step_2a_cel_biznesowy" # Powrót na ścieżkę biznesową po wyjaśnieniu
+      - text: "[Nacisk] Proszę po prostu zawołać szefa! (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic1"
+
+  "step_3a_standardowe_przedstawienie":
+    scene_content:
+      - type: description
+        text: |
+          Przedstawiasz się i od razu przechodzisz do celu wizyty, mówiąc o możliwościach współpracy w zakresie energii elektrycznej.
+      - type: npc_dialog
+        text: |
+          (Pan Marek wzdycha) A, znowu przedstawiciel od prądu... Wie pan co, ja mam umowę od 20 lat z tym samym dostawcą, nic nie zmieniam, dziękuję. Szkoda pana czasu.
+      - type: system_advice
+        text: |
+          (Klasyczna obiekcja wynikająca z przywiązania i strachu przed zmianą. Jak zareagujesz? Transcript 2025 03 27 - opis klienta typu 'konserwatysta')
+      - type: description
+        text: |
+          Właściciel od razu stawia mur. Wygląda na to, że rozmowa może zakończyć się, zanim na dobre się zaczęła. (Current SP: 25)
+    choices: # Order randomized, 50/50 split
+      - text: "[Akceptacja] Rozumiem, w takim razie dziękuję. (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic2"
+      - text: "[Uznanie] 20 lat to imponujące! Co Pan najbardziej ceni...? (+10)"
+        sp_change: 10
+        next_step_id: "step_4a_docenienie_i_pytanie"
+      - text: "[Konfrontacja] Ale rynek się zmienił! Traci Pan! (-10)"
+        sp_change: -10
+        next_step_id: "step_4b_konfrontacja_strata"
+      - text: "[Obietnica] Gwarantuję oszczędności! Proszę posłuchać. (+5)"
+        sp_change: 5
+        next_step_id: "step_4c_obietnica_oszczednosci"
+
+  "step_3b_pozytywne_otwarcie":
+    scene_content:
+      - type: description
+        text: |
+          Zaczynasz od podziękowania za poświęcony czas, doceniając jego zaangażowanie w prowadzenie restauracji. Starasz się zbudować nić porozumienia.
+      - type: user_dialog
+        text: |
+          Dzień dobry Panie Marku, dziękuję, że znalazł Pan chwilę. Wiem, jak to jest prowadzić własny biznes. Jestem [Twoje Imię] z Direct4Energy, pomagamy takim przedsiębiorcom jak Pan optymalizować koszty.
+      - type: npc_dialog
+        text: |
+          (Pan Marek przygląda Ci się uważniej, nieco mniej nieufnie) Direct... coś tam? Kolejny od prądu, tak? Wie pan, ja tam się na tym nie znam, mam umowę od 20 lat z Tauronem (lub innym lokalnym OSD), płacę i tyle. Nie chcę nic ruszać.
+      - type: system_advice
+        text: |
+          (Klient potwierdza długi staż umowy i brak wiedzy. Użyj tej informacji. Pytaj, nie atakuj. Transcript 2025 03 27 - podejście do klienta nieświadomego/bojącego się zmiany)
+      - type: description
+        text: |
+          Nawiązałeś kontakt, ale klient od razu sygnalizuje swoje przywiązanie i niechęć do zmian. Kluczowe jest teraz zadanie odpowiednich pytań. (Current SP: 40)
+    choices: # Order randomized, 50/50 split
+      - text: "[Pytanie o Satysfakcję] Skoro 20 lat, to musi być Pan zadowolony? (+10)"
+        sp_change: 10
+        next_step_id: "step_4a_docenienie_i_pytanie" # Łączy się ze ścieżką docenienia
+      - text: "[Pytanie o Rachunki] A jak wyglądają Pana rachunki? Dużo? (+5)"
+        sp_change: 5
+        next_step_id: "step_4d_pytanie_o_rachunki"
+      - text: "[Wyjaśnienie Rynku] Ale wie Pan, że można zmienić sprzedawcę? (-10)"
+        sp_change: -10
+        next_step_id: "step_4e_edukacja_o_rynku"
+      - text: "[Nacisk na OSD] Tauron to tylko dystrybutor! Sprzedawcę można zmienić! (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic3"
+
+  "step_4a_docenienie_i_pytanie":
+    scene_content:
+      - type: description
+        text: |
+          Twoje uznanie dla jego lojalności zdaje się przełamywać pierwsze lody. Pan Marek lekko się prostuje.
+      - type: user_dialog
+        text: |
+          20 lat z jednym dostawcą to naprawdę rzadkość w dzisiejszych czasach. Chciałbym mieć tylko takich lojalnych klientów! Co sprawia, że jest Pan tak wierny tej współpracy? Co Pan najbardziej ceni?
+      - type: npc_dialog
+        text: |
+          (Zastanawia się) No wie pan... przyzwyczajenie. Zawsze byli. Nigdy nie było problemów z prądem, rachunki przychodzą, płacę. A słyszałem różne historie, jak ludzie zmieniali, to potem jakieś cyrki były, podwójne faktury... Ja tam wolę święty spokój. Nie znam się, nie chcę kłopotów.
+      - type: system_advice
+        text: |
+          (Klient ujawnia główną motywację: strach przed problemami i zmianą, wynikający z braku wiedzy i zasłyszanych historii. Potwierdź jego obawy i delikatnie wprowadź rolę URE oraz różnicę OSD/Sprzedawca. Transcript 2025 03 27 - radzenie sobie z obawami)
+      - type: description
+        text: |
+          Pan Marek boi się komplikacji i bazuje na negatywnych historiach. Jak odniesiesz się do jego obaw, nie podważając ich od razu? (Current SP: 50 / 35 / 45 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Empatia i Wyjaśnienie] Rozumiem obawy, wiele osób tak ma... (+10)"
+        sp_change: 10
+        next_step_id: "step_5a_empatia_i_wyjasnienie_URE"
+      - text: "[Ignorowanie Obaw] Ale te historie to przeszłość! Teraz jest inaczej! (-10)"
+        sp_change: -10
+        next_step_id: "step_5b_ignorowanie_obaw"
+
+  "step_4b_konfrontacja_strata":
+    scene_content:
+      - type: description
+        text: |
+          Twoje bezpośrednie stwierdzenie o stracie pieniędzy wywołuje reakcję obronną u Pana Marka.
+      - type: npc_dialog
+        text: |
+          Co pan mi tu opowiada, że tracę! Ja płacę rachunki, prąd mam. Skąd pan może wiedzieć, czy tracę? Pewnie pan chce mi coś wcisnąć i tyle!
+      - type: system_advice
+        text: |
+          (Konfrontacja na tym etapie, bez zbudowania zaufania i zrozumienia sytuacji klienta, rodzi opór. Spróbuj cofnąć się o krok. Transcript 2025 03 25 - budowanie relacji przed prezentacją oferty)
+      - type: description
+        text: |
+          Zaatakowałeś zbyt wcześnie. Klient czuje się osaczony i nieufny. Musisz złagodzić sytuację. (Current SP: 15)
+    choices: # Order randomized, 50/50 split
+      - text: "[Przeprosiny i Pytanie] Przepraszam, nie to miałem na myśli... (+5)"
+        sp_change: 5
+        next_step_id: "step_5c_przeprosiny_i_pytanie"
+      - text: "[Utrzymanie Stanowiska] Ale liczby nie kłamią! Pokażę Panu! (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic1"
+
+  "step_4c_obietnica_oszczednosci":
+    scene_content:
+      - type: description
+        text: |
+          Składasz obietnicę oszczędności, próbując zainteresować klienta konkretną korzyścią.
+      - type: npc_dialog
+        text: |
+          Oszczędności... wszyscy tak mówią. A potem drobnym druczkiem coś dopisane. Ja już słyszałem takie obietnice. Dziękuję, nie jestem zainteresowany.
+      - type: system_advice
+        text: |
+          (Puste obietnice bez pokrycia budzą sceptycyzm. Zamiast obiecywać, lepiej zaproponować analizę jego sytuacji. Transcript 2025 03 25 - unikanie pustych obietnic)
+      - type: description
+        text: |
+          Twoja obietnica trafiła w próżnię. Klient jest sceptyczny i nie wierzy w łatwe oszczędności. (Current SP: 30)
+    choices: # Order randomized, 50/50 split
+      - text: "[Propozycja Analizy] A gdybym bez zobowiązań pokazał...? (+5)"
+        sp_change: 5
+        next_step_id: "step_5d_propozycja_analizy"
+      - text: "[Powtórzenie Obietnicy] Ale ja naprawdę gwarantuję! (-10)"
+        sp_change: -10
+        next_step_id: "step_5e_powtorzenie_obietnicy"
+
+  "step_4d_pytanie_o_rachunki":
+    scene_content:
+      - type: description
+        text: |
+          Pytasz o wysokość rachunków, próbując znaleźć punkt zaczepienia do rozmowy o kosztach.
+      - type: npc_dialog
+        text: |
+          A co pana obchodzą moje rachunki? Płacę, ile przyjdzie. Czasem więcej, czasem mniej. Nie będę panu pokazywał faktur.
+      - type: system_advice
+        text: |
+          (Pytanie o konkretne kwoty lub proszenie o faktury na tym etapie jest zbyt inwazyjne. Lepiej skupić się na ogólnych mechanizmach rynkowych. Transcript 2025 03 25 - etap badania potrzeb, nie zbierania danych)
+      - type: description
+        text: |
+          Klient poczuł się zbyt naciskany i zamknął się na rozmowę o konkretnych kosztach. (Current SP: 35)
+    choices: # Order randomized, 50/50 split
+      - text: "[Zmiana Tematu] Rozumiem, nie o to pytałem... (+5)"
+        sp_change: 5
+        next_step_id: "step_5f_zmiana_tematu_na_rynek"
+      - text: "[Naleganie] Ale bez faktur nic nie mogę Panu powiedzieć! (-10)"
+        sp_change: -10
+        next_step_id: "step_5g_naleganie_na_faktury"
+
+  "step_4e_edukacja_o_rynku":
+    scene_content:
+      - type: description
+        text: |
+          Próbujesz wyjaśnić klientowi podstawy działania rynku energii i możliwość zmiany sprzedawcy.
+      - type: npc_dialog
+        text: |
+          Zmienić sprzedawcę? A po co? Prąd to prąd, płynie tymi samymi kablami. Tauron mi dostarcza i tyle. Nie widzę sensu, żeby coś kombinować.
+      - type: system_advice
+        text: |
+          (Klient nie rozumie rozdziału OSD od Sprzedawcy - kluczowy element liberalizacji rynku (TPA). Wyjaśnij to prostym językiem. Transcript 2025 03 26 - rola OSD i Sprzedawcy, zasada TPA)
+      - type: description
+        text: |
+          Pan Marek nie widzi różnicy między dystrybutorem a sprzedawcą. Musisz mu to klarownie wytłumaczyć. (Current SP: 30)
+    choices: # Order randomized, 50/50 split
+      - text: "[Analogia] To jak z telefonem - sieć jedna, operatorzy różni... (+10)"
+        sp_change: 10
+        next_step_id: "step_5h_analogia_telefon"
+      - text: "[Technicznie] Zgodnie z TPA OSD musi udostępnić sieć... (-10)"
+        sp_change: -10
+        next_step_id: "step_5i_techniczne_TPA"
+
+  "step_5a_empatia_i_wyjasnienie_URE":
+    scene_content:
+      - type: description
+        text: |
+          Okazujesz zrozumienie dla jego obaw, co buduje zaufanie. Następnie delikatnie wyjaśniasz mechanizmy rynkowe.
+      - type: user_dialog
+        text: |
+          Doskonale rozumiem Pana obawy. Wiele osób słyszało różne historie i boi się problemów. Właśnie dlatego istnieje Urząd Regulacji Energetyki (URE), który pilnuje, żeby wszystko odbywało się zgodnie z prawem i chroni klientów. Poza tym, problemy z dostawą prądu, awarie – za to zawsze odpowiada lokalny dystrybutor, czyli w Pana przypadku Tauron, niezależnie od tego, od kogo Pan kupuje samą energię. Zmiana sprzedawcy tego nie zmienia.
+      - type: npc_dialog
+        text: |
+          (Słucha uważnie, choć nadal sceptycznie) URE... A ten Tauron to co innego niż sprzedawca? Myślałem, że to jedno i to samo.
+      - type: system_advice
+        text: |
+          (Świetnie! Klient zaczyna rozumieć podział ról. Teraz wyjaśnij różnicę między OSD a Sprzedawcą i korzyści płynące z możliwości wyboru. Transcript 2025 03 26 - rola OSD i Sprzedawcy)
+      - type: description
+        text: |
+          Trafiłeś w sedno. Klient jest gotów wysłuchać wyjaśnień na temat struktury rynku. (Current SP: 60 / 45 / 55 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Wyjaśnienie OSD/Sprzedawca] Dokładnie! Tauron dba o kable... (+10)"
+        sp_change: 10
+        next_step_id: "step_6a_wyjasnienie_OSD_Sprzedawca"
+      - text: "[Minimalizowanie] To szczegóły, najważniejsze są ceny. (-10)"
+        sp_change: -10
+        next_step_id: "step_6b_minimalizowanie_rol"
+
+  "step_5b_ignorowanie_obaw":
+    scene_content:
+      - type: description
+        text: |
+          Zignorowałeś obawy klienta, próbując przekonać go, że "teraz jest inaczej". Pan Marek kręci głową z niedowierzaniem.
+      - type: npc_dialog
+        text: |
+          Pan mówi, że inaczej? A ja tam swoje wiem. Nie będę ryzykował. Dziękuję panu za rozmowę.
+      - type: description
+        text: |
+          Klient poczuł się zlekceważony. Straciłeś jego zaufanie i szansę na dalszą rozmowę. (Current SP: 40 / 25 / 35 - zależy od ścieżki)
+    choices: # Order randomized, 50/50 split
+      - text: "[Ratunek - Empatia] Przepraszam, źle to ująłem... (+5)"
+        sp_change: 5
+        next_step_id: "step_5a_empatia_i_wyjasnienie_URE" # Powrót na ścieżkę empatii
+      - text: "[Koniec] Skoro Pan nie wierzy, to trudno. (-20)"
+        sp_change: -20
+        next_step_id: "ending_bad_sp_zero_generic4"
+
+  "step_5c_przeprosiny_i_pytanie":
+    scene_content:
+      - type: description
+        text: |
+          Twoje przeprosiny nieco łagodzą napięcie. Pan Marek przestaje marszczyć brwi.
+      - type: user_dialog
+        text: |
+          Najmocniej przepraszam, nie chciałem, żeby to tak zabrzmiało. Chodziło mi tylko o to, że rynek energii bardzo się zmienił przez te 20 lat. Czy mogę zapytać, co dokładnie sprawia, że jest Pan tak zadowolony z obecnej umowy? Co jest dla Pana najważniejsze?
+      - type: npc_dialog
+        text: |
+          (Wzdycha) No, jak mówiłem, przyzwyczajenie... i święty spokój. Nie lubię zmian.
+      - type: system_advice
+        text: |
+          (Udało się wrócić do rozmowy. Klient powtarza motywację 'świętego spokoju'. Podejdź do tego z empatią, jak w step_5a. Transcript 2025 03 27)
+      - type: description
+        text: |
+          Wróciłeś do punktu wyjścia, ale z nieco większym zaufaniem. Klient ceni spokój i boi się zmian. (Current SP: 20)
+    choices: # Order randomized, 50/50 split
+      - text: "[Empatia i Wyjaśnienie] Rozumiem potrzebę spokoju... (+10)"
+        sp_change: 10
+        next_step_id: "step_5a_empatia_i_wyjasnienie_URE" # Przejście na główną ścieżkę empatii
+      - text: "[Ignorowanie Obaw] Ale spokój kosztuje! (-10)"
+        sp_change: -10
+        next_step_id: "step_5b_ignorowanie_obaw" # Powtórzenie błędu ignorowania
+
+# --- END OF PART 1 OF 4 ---
